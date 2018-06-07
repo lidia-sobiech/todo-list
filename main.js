@@ -2,10 +2,10 @@
 let newTodo = document.getElementById('newTodo');
 let list = document.getElementsByClassName('todoList')[0];
 
-// // GET (pobieranie całej listy)
-// fetch(`http://localhost:1337/todo/`)
-//   .then(list => list.json().then(result => result.forEach(item => create(item))))
-//   .catch(err => console.log(err))
+// GET (pobieranie całej listy)
+fetch(`http://localhost:1337/todo/`)
+  .then(list => list.json().then(result => result.forEach(item => create(item))))
+  .catch(err => console.log(err))
 
 
 // todo jest w postaci: {item: '', done: false, id: 0}
@@ -26,12 +26,12 @@ function create(todo) {
   // edit a todo
   const editFunction = (event) => {
 
-  //   fetch(`http://localhost:1337/todo/${todo.id}`, {
-  //     method: 'PATCH',
-  //     body: JSON.stringify({item: text.value, done: checkbox.checked})
-  //   })
-  //   .catch(err => console.log(err))
-  // };
+    fetch(`http://localhost:1337/todo/${todo.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({item: text.value, done: checkbox.checked})
+    })
+    .catch(err => console.log(err))
+  };
 
   checkbox.addEventListener('change', editFunction);
   text.addEventListener('change', editFunction);
@@ -42,10 +42,10 @@ function create(todo) {
     list.removeChild(item);
     let id = item.getAttribute('data-id');
 
-  //   fetch(`http://localhost:1337/todo/${id}`, {
-  //     method: 'DELETE',
-  //   })
-  //   .catch(err => console.log(err))
+    fetch(`http://localhost:1337/todo/${id}`, {
+      method: 'DELETE',
+    })
+    .catch(err => console.log(err))
   });
 
   // place a new todo on the top of the list
@@ -59,12 +59,12 @@ const createTodo = () => {
   // if input field is not empty, add the new todo to the list
   if (newTodo.value && newTodo.value.length) {
 
-    // fetch(`http://localhost:1337/todo/`, {
-    //   method: 'POST',
-    //   body: JSON.stringify({item: newTodo.value, done: false})
-    // })
-    //   .then(todo => todo.json().then(result => create(result)))
-    //   .catch(err => console.log(err))
+    fetch(`http://localhost:1337/todo/`, {
+      method: 'POST',
+      body: JSON.stringify({item: newTodo.value, done: false})
+    })
+      .then(todo => todo.json().then(result => create(result)))
+      .catch(err => console.log(err))
 
     document.getElementById('newTodo').value = '';
   }
